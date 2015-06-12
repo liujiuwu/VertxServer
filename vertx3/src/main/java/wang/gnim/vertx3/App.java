@@ -1,13 +1,12 @@
 package wang.gnim.vertx3;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
+import io.vertx.core.Vertx;
+
+public class App {
+	
+	public static void main(String[] args) {
+//		Vertx.factory.vertx().deployVerticle("");
+		new TCPServer().start();
+		new HTTPServer().start();
+	}
 }
