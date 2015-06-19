@@ -13,5 +13,7 @@ public class TestVertx {
 		Vertx vertx2 = Vertx.factory.vertx();
 		
 		Assert.assertNotSame(vertx1, vertx2);
+		
+		Assert.assertNotSame(vertx1.eventBus(), vertx2.eventBus());
 	}
 }

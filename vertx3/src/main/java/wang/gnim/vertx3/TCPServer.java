@@ -1,18 +1,32 @@
 package wang.gnim.vertx3;
 
+
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
+import io.vertx.core.VertxOptions;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.net.NetServer;
 import io.vertx.core.net.NetSocket;
 
-public class TCPServer {
+public enum TCPServer {
 
+	INSTANCE;
+	
+	private Vertx vertx;
+	
+	private TCPServer() {
+		VertxOptions vertxOptions = new VertxOptions();
+		vertxOptions.setEventLoopPoolSize(1);
+		vertx = Vertx.factory.vertx(vertxOptions);
+	}
+	
+	public Vertx vertx() {
+		return vertx;
+	}
+	
 	public void start() {
-		Vertx vertx = Vertx.factory.vertx();
-		
 		HttpServerOptions options = new HttpServerOptions()
 			.setAcceptBacklog(100);
 		
@@ -25,11 +39,14 @@ public class TCPServer {
 		
 		@Override
 		public void handle(AsyncResult<NetServer> event) {
-			if(event.succeeded())
-				System.out.println("listen successed");
-			else
+			if(event.succeeded()) {
+				System.out.println("TCP listen successed");
+			}
+			else {
 				System.out.println(event.cause());
+			}
 		}
+		
 	}
 	
 	private class ConnectHandler implements Handler<NetSocket> {
