@@ -18,7 +18,7 @@ public enum HTTPServer {
 	
 	private final Vertx vertx;
 	
-	private HTTPServer() {
+	HTTPServer() {
 		VertxOptions vertxOptions = new VertxOptions();
 		vertxOptions.setEventLoopPoolSize(1);
 		vertx = Vertx.factory.vertx(vertxOptions);
@@ -36,7 +36,6 @@ public enum HTTPServer {
 		vertx.createHttpServer(options)
 				.requestHandler(new Handler<HttpServerRequest>() {
 
-					@Override
 					public void handle(HttpServerRequest event) {
 
 					}
@@ -46,7 +45,6 @@ public enum HTTPServer {
 	
 	private class ListenHandler implements Handler<AsyncResult<HttpServer>>{
 		
-		@Override
 		public void handle(AsyncResult<HttpServer> event) {
 			if(event.succeeded()) {
 				System.out.println("HTTP listen successed");
@@ -60,13 +58,12 @@ public enum HTTPServer {
 		public void deployClientCommand() {
 			DeploymentOptions options = new DeploymentOptions();
 			List<Class> actions = ClassFinder.findClasses("wang.gnim.vertx3.clientCommand", "");
-			for (Class class1 : actions) {
+			for (final Class class1 : actions) {
 				if(!class1.getSuperclass().getSimpleName().equals("ClientAbstractCommand"))
 					continue;
 				
 				vertx.deployVerticle(class1.getCanonicalName(), options, new Handler<AsyncResult<String>>() {
 
-					@Override
 					public void handle(AsyncResult<String> event) {
 						if(event.succeeded()) {
 							System.out.println("deploy:" + class1);
