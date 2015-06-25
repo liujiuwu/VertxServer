@@ -10,6 +10,7 @@ import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerOptions;
+import io.vertx.core.http.HttpServerRequest;
 
 public enum HTTPServer {
 
@@ -33,11 +34,14 @@ public enum HTTPServer {
 			.setAcceptBacklog(100);
 		
 		vertx.createHttpServer(options)
-				.requestHandler(result -> {
-					result.response().end();
-				})
-				.listen(8081, new ListenHandler());
-		
+				.requestHandler(new Handler<HttpServerRequest>() {
+
+					@Override
+					public void handle(HttpServerRequest event) {
+
+					}
+				}).listen(8081, new ListenHandler());
+
 	}
 	
 	private class ListenHandler implements Handler<AsyncResult<HttpServer>>{
@@ -45,8 +49,8 @@ public enum HTTPServer {
 		@Override
 		public void handle(AsyncResult<HttpServer> event) {
 			if(event.succeeded()) {
-				deployClientCommand();
 				System.out.println("HTTP listen successed");
+				deployClientCommand();
 			}
 			else {
 				System.out.println(event.cause());
