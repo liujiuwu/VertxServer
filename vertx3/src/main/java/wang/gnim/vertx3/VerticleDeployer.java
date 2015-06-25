@@ -13,10 +13,10 @@ public class VerticleDeployer {
 
 	public static void deployClientAction() {
 		Vertx vertx = TCPServer.INSTANCE.vertx();
-		
+
 		DeploymentOptions options = new DeploymentOptions();
 		List<Class> actions = ClassFinder.findClasses("wang.gnim.vertx3.clientAction", "");
-		for (Class class1 : actions) {
+		for (final Class class1 : actions) {
 			if(!class1.getSuperclass().getSimpleName().equals("ClientAbstractAction"))
 				continue;
 			

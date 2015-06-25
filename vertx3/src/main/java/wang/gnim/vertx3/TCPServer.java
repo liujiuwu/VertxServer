@@ -51,7 +51,7 @@ public enum TCPServer {
 	
 	private class ConnectHandler implements Handler<NetSocket> {
 		@Override
-		public void handle(NetSocket netSocket) {
+		public void handle(final NetSocket netSocket) {
 
 			netSocket.closeHandler(new Handler<Void>() {
 
