@@ -14,7 +14,6 @@ public abstract class ClientAbstractCommand extends AbstractVerticle {
 		
 		vertx.eventBus().consumer(name, new Handler<Message<Object>>() {
 
-			@Override
 			public void handle(Message<Object> event) {
 				JsonObject object = new JsonObject(event.body().toString());
 				execute(object);
