@@ -10,7 +10,7 @@ public abstract class ClientAbstractCommand extends AbstractVerticle {
 	@Override
 	public void start() throws Exception {
 		
-		String name = getClass().getSimpleName().split("Action")[0];
+		String name = getClass().getSimpleName().split("Command")[0];
 		
 		vertx.eventBus().consumer(name, new Handler<Message<Object>>() {
 

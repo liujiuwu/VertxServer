@@ -7,7 +7,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerResponse;
+import io.vertx.core.json.JsonObject;
 import io.vertx.ext.dropwizard.DropwizardMetricsOptions;
+import io.vertx.ext.dropwizard.MetricsService;
 import wang.gnim.vertx3.util.ClassFinder;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.DeploymentOptions;
@@ -23,27 +25,41 @@ public enum HTTPServer {
 	INSTANCE;
 	
 	private final Vertx vertx;
-	
+    private MetricsService metricsService;
+    private HttpServer server;
+
 	HTTPServer() {
 		VertxOptions vertxOptions = new VertxOptions();
 		vertxOptions.setEventLoopPoolSize(1)
                 .setMetricsOptions(new DropwizardMetricsOptions().setEnabled(true));
 
 		vertx = Vertx.factory.vertx(vertxOptions);
+
+        metricsService = MetricsService.create(vertx);
 	}
 	
 	public Vertx vertx() {
 		return vertx;
 	}
-	
+
+    public MetricsService getMetricsService() {
+        return metricsService;
+    }
+
+    public HttpServer getHttpServer() {
+        return server;
+    }
+
 	public void start() {
 		
 		HttpServerOptions options = new HttpServerOptions()
 			.setAcceptBacklog(100);
-		
-		vertx.createHttpServer()
+
+        HttpServer server = vertx.createHttpServer()
 				.requestHandler(new RequestHandler())
                 .listen(8081, new ListenHandler());
+
+        JsonObject metrics = metricsService.getMetricsSnapshot(server);
 	}
 
     private class RequestHandler implements Handler<HttpServerRequest> {
