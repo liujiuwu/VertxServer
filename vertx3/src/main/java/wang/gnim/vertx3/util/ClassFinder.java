@@ -2,6 +2,7 @@ package wang.gnim.vertx3.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -149,8 +150,13 @@ public class ClassFinder {
 
 	private static List<String> file(URL location) {
 		List<String> classNames = new ArrayList<String>();
-		File dir = new File(URLDecoder.decode(location.getPath()));
-		if ("META-INF".equals(dir.getName())) {
+        File dir = null;
+        try {
+            dir = new File(URLDecoder.decode(location.getPath(), "UTF8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        if ("META-INF".equals(dir.getName())) {
 			dir = dir.getParentFile(); // Scrape "META-INF" off
 		}
 		if (dir.isDirectory()) {

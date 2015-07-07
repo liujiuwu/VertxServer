@@ -57,7 +57,7 @@ public enum TCPServer {
 
 				@Override
 				public void handle(Void event) {
-					System.out.println("closeHandler");
+
 				}
 			});
 			
@@ -65,7 +65,6 @@ public enum TCPServer {
 
 				@Override
 				public void handle(Void event) {
-					System.out.println("drainHandler");
 				}
 			});
 			
@@ -73,7 +72,6 @@ public enum TCPServer {
 
 				@Override
 				public void handle(Void event) {
-					System.out.println("endHandler");
 				}
 			});
 			
@@ -81,7 +79,7 @@ public enum TCPServer {
 
 				@Override
 				public void handle(Throwable event) {
-					System.out.println("exceptionHandler");
+                    event.printStackTrace();
 				}
 			});
 			
@@ -89,8 +87,8 @@ public enum TCPServer {
 
 				@Override
 				public void handle(Buffer event) {
-					System.out.println("handler");
-					netSocket.write("123");
+					System.out.println(event.getString(0, event.length()));
+					netSocket.write("0");
 				}
 			});
 		}
