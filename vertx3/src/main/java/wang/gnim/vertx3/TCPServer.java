@@ -16,7 +16,7 @@ public enum TCPServer {
 	
 	private Vertx vertx;
 	
-	private TCPServer() {
+	TCPServer() {
 		VertxOptions vertxOptions = new VertxOptions();
 		vertxOptions.setEventLoopPoolSize(1);
 		vertx = Vertx.factory.vertx(vertxOptions);

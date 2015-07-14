@@ -13,7 +13,7 @@ public enum ClientAction {
 
 	private String address;
 	
-	private ClientAction(Class clazz) {
+	ClientAction(Class clazz) {
 		evnetBus = TCPServer.INSTANCE.vertx().eventBus();
 		address = clazz.getCanonicalName();
 	}
