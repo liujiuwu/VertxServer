@@ -1,11 +1,12 @@
 package wang.gnim.vertx3.action;
 
-import wang.gnim.vertx3.TCPServe;
+import wang.gnim.vertx3.TCPManager;
 import io.vertx.core.eventbus.EventBus;
+import wang.gnim.vertx3.action.test.SimpleAction;
 
 public enum ClientAction {
 
-	SimpleClient(wang.gnim.vertx3.action.test.SimpleClient.class),
+	SimpleClient(SimpleAction.class),
 	;
 	
 	private EventBus evnetBus;
@@ -13,7 +14,7 @@ public enum ClientAction {
 	private String address;
 	
 	ClientAction(Class clazz) {
-		evnetBus = TCPServe.INSTANCE.vertx().eventBus();
+		evnetBus = TCPManager.INSTANCE.vertx().eventBus();
 		address = clazz.getCanonicalName();
 	}
 	

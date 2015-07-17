@@ -4,7 +4,7 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Handler;
 import io.vertx.core.eventbus.Message;
 
-public abstract class ClientAbstractAction extends AbstractVerticle {
+public abstract class AbstractAction extends AbstractVerticle {
 
 	@Override
 	public void start() throws Exception {
@@ -21,5 +21,5 @@ public abstract class ClientAbstractAction extends AbstractVerticle {
 	}
 
 	public abstract void execute(String obj);
-	
+
 }

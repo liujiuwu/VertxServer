@@ -1,8 +1,8 @@
 package wang.gnim.vertx3.action.test;
 
-import wang.gnim.vertx3.action.ClientAbstractAction;
+import wang.gnim.vertx3.action.AbstractAction;
 
-public class SimpleClient extends ClientAbstractAction{
+public class SimpleAction extends AbstractAction {
 
 	@Override
 	public void execute(String obj) {
