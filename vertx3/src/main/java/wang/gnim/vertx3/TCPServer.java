@@ -38,10 +38,8 @@ public class TCPServer extends AbstractVerticle {
 		public void deployAction() {
 
 			DeploymentOptions options = new DeploymentOptions();
-			List<Class> actions = ClassFinder.findClasses("wang.gnim.vertx3.clientAction", "");
-			for (final Class class1 : actions) {
-				if (!class1.getSuperclass().getSimpleName().equals("ClientAbstractAction"))
-					continue;
+
+            for (final Class class1 : ServerResource.INSTANCE.getActions()) {
 
 				vertx.deployVerticle(class1.getCanonicalName(), options, new Handler<AsyncResult<String>>() {
 
