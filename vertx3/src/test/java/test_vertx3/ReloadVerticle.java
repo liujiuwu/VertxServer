@@ -13,4 +13,8 @@ public class ReloadVerticle  extends AbstractVerticle {
     public void start() throws Exception {
         System.out.println(new Date().toLocaleString() + " --- ");
     }
+
+    public String toString() {
+        return "";
+    }
 }

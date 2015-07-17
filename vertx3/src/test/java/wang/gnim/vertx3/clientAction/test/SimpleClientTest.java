@@ -3,7 +3,7 @@ package wang.gnim.vertx3.clientAction.test;
 import org.junit.Test;
 
 import wang.gnim.vertx3.MockServer;
-import wang.gnim.vertx3.clientAction.ClientAction;
+import wang.gnim.vertx3.action.ClientAction;
 
 public class SimpleClientTest {
 
