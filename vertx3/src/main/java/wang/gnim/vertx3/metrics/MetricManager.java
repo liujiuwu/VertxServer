@@ -1,7 +1,10 @@
 package wang.gnim.vertx3.metrics;
 
 import com.codahale.metrics.*;
+import com.codahale.metrics.health.HealthCheck;
+import com.codahale.metrics.health.HealthCheckRegistry;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -13,7 +16,8 @@ public enum MetricManager {
 
     INSTANCE;
 
-    private static final MetricRegistry metrics = new MetricRegistry();
+    private final MetricRegistry metrics = new MetricRegistry();
+    private final HealthCheckRegistry healthChecks = new HealthCheckRegistry();
 
     public Meter meter(String name) {
         Meter requests = metrics.meter(name);
@@ -40,8 +44,23 @@ public enum MetricManager {
         return timer;
     }
 
-    public void healthCheck() {
-        // TODO
+    public void addMysqlHealthCheck() {
+        healthChecks.register("mysql", new DatabaseHealthCheck());
+    }
+
+    public void runHealthChecks() {
+        final Map<String, HealthCheck.Result> results = healthChecks.runHealthChecks();
+        for (Map.Entry<String, HealthCheck.Result> entry : results.entrySet()) {
+            if (entry.getValue().isHealthy()) {
+                System.out.println(entry.getKey() + " is healthy");
+            } else {
+                System.err.println(entry.getKey() + " is UNHEALTHY: " + entry.getValue().getMessage());
+                final Throwable e = entry.getValue().getError();
+                if (e != null) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public void startConsoleReporter() {
