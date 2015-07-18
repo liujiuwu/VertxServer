@@ -13,7 +13,6 @@ public class MetricCommand  extends AbstractCommand {
     @Override
     public String execute(JsonObject obj) {
         MetricsService metricsService = HTTPManager.INSTANCE.getMetricsService();
-//        metricsService.getMetricsSnapshot(HTTPServe.INSTANCE.getHttpServer()).toString()
         return "";
     }
 }
