@@ -1,4 +1,4 @@
-package wang.gnim.vertx3.clientAction.test;
+package wang.gnim.vertx3.action.test;
 
 import org.junit.Test;
 
