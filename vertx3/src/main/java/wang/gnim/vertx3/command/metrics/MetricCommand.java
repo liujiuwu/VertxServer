@@ -2,7 +2,7 @@ package wang.gnim.vertx3.command.metrics;
 
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.dropwizard.MetricsService;
-import wang.gnim.vertx3.HTTPManager;
+import wang.gnim.vertx3.net.HTTPManager;
 import wang.gnim.vertx3.command.AbstractCommand;
 
 /**

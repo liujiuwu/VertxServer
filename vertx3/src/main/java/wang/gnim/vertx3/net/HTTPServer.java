@@ -1,4 +1,4 @@
-package wang.gnim.vertx3;
+package wang.gnim.vertx3.net;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

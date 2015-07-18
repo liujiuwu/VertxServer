@@ -1,22 +1,12 @@
-package wang.gnim.vertx3;
+package wang.gnim.vertx3.net;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import io.vertx.core.*;
-import io.vertx.core.buffer.Buffer;
-import io.vertx.core.http.HttpServerResponse;
-import io.vertx.core.json.JsonObject;
 import io.vertx.ext.dropwizard.DropwizardMetricsOptions;
 import io.vertx.ext.dropwizard.MetricsService;
-import wang.gnim.vertx3.util.ClassFinder;
-import io.vertx.core.http.HttpServer;
-import io.vertx.core.http.HttpServerOptions;
-import io.vertx.core.http.HttpServerRequest;
 
 public enum HTTPManager {
 

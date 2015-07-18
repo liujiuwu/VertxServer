@@ -1,4 +1,4 @@
-package wang.gnim.vertx3;
+package wang.gnim.vertx3.net;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
@@ -8,9 +8,6 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.net.NetServer;
 import io.vertx.core.net.NetSocket;
-import wang.gnim.vertx3.util.ClassFinder;
-
-import java.util.List;
 
 /**
  * Created by wanggnim on 2015/7/17.

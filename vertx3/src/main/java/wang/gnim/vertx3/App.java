@@ -2,6 +2,9 @@ package wang.gnim.vertx3;
 
 
 import wang.gnim.vertx3.metrics.MetricManager;
+import wang.gnim.vertx3.net.HTTPManager;
+import wang.gnim.vertx3.net.ServerResource;
+import wang.gnim.vertx3.net.TCPManager;
 
 public class App {
 	

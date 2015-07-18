@@ -1,12 +1,7 @@
-package wang.gnim.vertx3;
+package wang.gnim.vertx3.net;
 
 
 import io.vertx.core.*;
-import io.vertx.core.buffer.Buffer;
-import io.vertx.core.http.HttpServerOptions;
-import io.vertx.core.net.NetServer;
-import io.vertx.core.net.NetSocket;
-import wang.gnim.vertx3.util.ClassFinder;
 
 import java.util.ArrayList;
 import java.util.Collections;

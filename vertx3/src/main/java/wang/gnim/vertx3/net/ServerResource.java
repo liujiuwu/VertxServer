@@ -1,4 +1,4 @@
-package wang.gnim.vertx3;
+package wang.gnim.vertx3.net;
 
 import wang.gnim.vertx3.util.ClassFinder;
 
