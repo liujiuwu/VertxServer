@@ -3,7 +3,7 @@ package test_vertx3;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
-import wang.gnim.vertx3.net.TCPManager;
+import wang.gnim.vertx3.vertx.VertxManager;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,7 +28,7 @@ public class TestVertxReload {
     }
 
     public static void deploy() {
-        Vertx vertx = TCPManager.INSTANCE.vertx();
+        Vertx vertx = Vertx.vertx();
         String className = ReloadVerticle.class.getCanonicalName();
 
         vertx.deployVerticle(className, new Handler<AsyncResult<String>>() {
@@ -47,7 +47,7 @@ public class TestVertxReload {
     }
 
     public static void undeploy() {
-        Vertx vertx = TCPManager.INSTANCE.vertx();
+        Vertx vertx = Vertx.vertx();
         String className = ReloadVerticle.class.getCanonicalName();
         vertx.undeploy(id, new Handler<AsyncResult<Void>>() {
             @Override
