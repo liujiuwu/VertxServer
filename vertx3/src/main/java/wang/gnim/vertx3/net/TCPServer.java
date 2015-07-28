@@ -62,21 +62,24 @@ public class TCPServer extends AbstractVerticle {
 				@Override
 				public void handle(Void event) {
 
-				}
+                    System.out.println("closeHandler");
+                }
 			});
 
 			netSocket.drainHandler(new Handler<Void>() {
 
 				@Override
 				public void handle(Void event) {
-				}
+                    System.out.println("drainHandler");
+                }
 			});
 
 			netSocket.endHandler(new Handler<Void>() {
 
 				@Override
 				public void handle(Void event) {
-				}
+                    System.out.println("endHandler");
+                }
 			});
 
 			netSocket.exceptionHandler(new Handler<Throwable>() {
@@ -91,8 +94,9 @@ public class TCPServer extends AbstractVerticle {
 
 				@Override
 				public void handle(Buffer event) {
-					System.out.println(event.getString(0, event.length()));
-					netSocket.write("0");
+                    byte[] bytes = event.getBytes(0, event.length());
+                    System.out.println("handler");
+                    netSocket.write("revice");
 				}
 			});
 		}

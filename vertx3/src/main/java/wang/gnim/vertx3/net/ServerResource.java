@@ -16,12 +16,13 @@ public enum ServerResource {
 
     ServerResource() {
         actions = new ArrayList<>();
+        init();
     }
 
     public void init() {
-        List<Class> list = ClassFinder.findClasses("wang.gnim.vertx3.clientAction", "");
+        List<Class> list = ClassFinder.findClasses("wang.gnim.vertx3.action", "");
         for (final Class class1 : list) {
-            if (!class1.getSuperclass().getSimpleName().equals("ClientAbstractAction"))
+            if (!class1.getSuperclass().getSimpleName().equals("AbstractAction"))
                 continue;
             actions.add(class1);
         }

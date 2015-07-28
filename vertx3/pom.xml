@@ -73,7 +73,10 @@
             <artifactId>metrics-jdbi</artifactId>
             <version>3.1.2</version>
         </dependency>
-
+        <!--<dependency>-->
+            <!--<groupId>wang.gnim</groupId>-->
+            <!--<artifactId>protobuf</artifactId>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>

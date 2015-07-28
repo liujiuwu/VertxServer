@@ -3,7 +3,6 @@ package test_vertx3;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
-import wang.gnim.vertx3.vertx.VertxManager;
 
 import java.util.concurrent.TimeUnit;
 
