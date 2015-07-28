@@ -4,12 +4,15 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Handler;
-import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.net.NetServer;
 import io.vertx.core.net.NetSocket;
+import wang.gnim.vertx3.util.PropertiesConfig;
+
+import java.util.List;
 
 /**
+ *
  * Created by wanggnim on 2015/7/17.
  */
 public class TCPServer extends AbstractVerticle {
@@ -17,7 +20,9 @@ public class TCPServer extends AbstractVerticle {
 	public void start() {
 		HttpServerOptions options = new HttpServerOptions().setAcceptBacklog(100);
 
-		vertx.createNetServer(options).connectHandler(new ConnectHandler()).listen(9000, new ListenHandler());
+		vertx.createNetServer(options)
+                .connectHandler(new ConnectHandler())
+                .listen(PropertiesConfig.TCP_PORT.intValue(), new ListenHandler());
 	}
 
 	private class ListenHandler implements Handler<AsyncResult<NetServer>> {
@@ -25,7 +30,6 @@ public class TCPServer extends AbstractVerticle {
 		@Override
 		public void handle(AsyncResult<NetServer> event) {
 			if (event.succeeded()) {
-				System.out.println("TCP listen successed");
 				deployAction();
 			} else {
 				event.cause().printStackTrace();
@@ -35,20 +39,16 @@ public class TCPServer extends AbstractVerticle {
 		public void deployAction() {
 
 			DeploymentOptions options = new DeploymentOptions();
+            List<Class> actions = ServerResource.INSTANCE.getActions();
+            for (final Class class1 : actions) {
 
-            for (final Class class1 : ServerResource.INSTANCE.getActions()) {
-
-				vertx.deployVerticle(class1.getCanonicalName(), options, new Handler<AsyncResult<String>>() {
-
-					@Override
-					public void handle(AsyncResult<String> event) {
-						if (event.succeeded()) {
-							System.out.println("deploy:" + class1.getCanonicalName());
-						} else {
-							System.out.println("faile deploy:" + class1.getCanonicalName());
-						}
-					}
-				});
+				vertx.deployVerticle(class1.getCanonicalName(), options, event -> {
+                    if (event.succeeded()) {
+                        System.out.println("deploy:" + class1.getCanonicalName());
+                    } else {
+                        System.out.println("faile deploy:" + class1.getCanonicalName());
+                    }
+                });
 			}
 		}
 	}
@@ -57,48 +57,19 @@ public class TCPServer extends AbstractVerticle {
 		@Override
 		public void handle(final NetSocket netSocket) {
 
-			netSocket.closeHandler(new Handler<Void>() {
+			netSocket.closeHandler(event -> System.out.println("closeHandler"));
 
-				@Override
-				public void handle(Void event) {
+			netSocket.drainHandler(event -> System.out.println("drainHandler"));
 
-                    System.out.println("closeHandler");
-                }
-			});
+			netSocket.endHandler(event -> System.out.println("endHandler"));
 
-			netSocket.drainHandler(new Handler<Void>() {
+			netSocket.exceptionHandler(Throwable::printStackTrace);
 
-				@Override
-				public void handle(Void event) {
-                    System.out.println("drainHandler");
-                }
-			});
-
-			netSocket.endHandler(new Handler<Void>() {
-
-				@Override
-				public void handle(Void event) {
-                    System.out.println("endHandler");
-                }
-			});
-
-			netSocket.exceptionHandler(new Handler<Throwable>() {
-
-				@Override
-				public void handle(Throwable event) {
-					event.printStackTrace();
-				}
-			});
-
-			netSocket.handler(new Handler<Buffer>() {
-
-				@Override
-				public void handle(Buffer event) {
-                    byte[] bytes = event.getBytes(0, event.length());
-                    System.out.println("handler");
-                    netSocket.write("revice");
-				}
-			});
+			netSocket.handler(event -> {
+                byte[] bytes = event.getBytes(0, event.length());
+                System.out.println("handler");
+                netSocket.write("revice");
+            });
 		}
 	}
 }

@@ -12,7 +12,7 @@ public class MetricCommand  extends AbstractCommand {
 
     @Override
     public String execute(JsonObject obj) {
-        MetricsService metricsService = Vertxs.HTTP.getMetricsService();
+        MetricsService metricsService = Vertxs.HTTP_SERVER.getMetricsService();
         return "";
     }
 }

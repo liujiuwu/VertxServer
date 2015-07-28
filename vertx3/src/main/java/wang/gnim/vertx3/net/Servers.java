@@ -13,8 +13,8 @@ import java.util.List;
  */
 public enum Servers {
 
-    TCP(Vertxs.TCP, TCPServer.class),
-    HTTP(Vertxs.HTTP, HTTPServer.class);
+    TCP(Vertxs.TCP_SERVER, TCPServer.class),
+    HTTP(Vertxs.HTTP_SERVER, HTTPServer.class);
 
     Servers(Vertxs vertxs, Class clazz) {
         this.vertxs = vertxs;
@@ -26,7 +26,7 @@ public enum Servers {
     private List<String> serverIds = new ArrayList<>();
 
     public void start() {
-        Vertxs.TCP.deployVerticle(TCPServer.class.getCanonicalName());
+        vertxs.deployVerticle(clazz.getCanonicalName());
     }
 
     public void restart() {
@@ -38,14 +38,11 @@ public enum Servers {
     }
 
     private void undeploy(String deploymentID) {
-        vertxs.undeploy(deploymentID, new Handler<AsyncResult<Void>>() {
-            @Override
-            public void handle(AsyncResult<Void> event) {
-                System.out.println(deploymentID + " 解除部署成功");
-                undeploy(serverIds);
-            }
+        vertxs.undeploy(deploymentID, event -> {
+            System.out.println(deploymentID + " 解除部署成功");
+            undeploy(serverIds);
         });
-    };
+    }
 
     private void undeploy(List<String> copyServerIds) {
         if (copyServerIds.size() > 0) {
