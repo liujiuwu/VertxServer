@@ -2,7 +2,7 @@ package wang.gnim.vertx3;
 
 
 import wang.gnim.vertx3.net.Servers;
-import wang.gnim.vertx3.net.ServerResource;
+import wang.gnim.vertx3.util.ServerResource;
 
 public class App {
 	

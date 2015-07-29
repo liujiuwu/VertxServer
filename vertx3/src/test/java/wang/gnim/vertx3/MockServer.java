@@ -1,10 +1,7 @@
 package wang.gnim.vertx3;
 
-import io.vertx.core.AsyncResult;
-import io.vertx.core.Handler;
-import wang.gnim.vertx3.net.ServerResource;
+import wang.gnim.vertx3.util.ServerResource;
 import wang.gnim.vertx3.net.Servers;
-import wang.gnim.vertx3.net.TCPServer;
 import wang.gnim.vertx3.vertx.Vertxs;
 
 import java.util.List;

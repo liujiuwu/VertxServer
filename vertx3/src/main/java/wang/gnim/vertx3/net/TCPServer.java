@@ -8,6 +8,7 @@ import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.net.NetServer;
 import io.vertx.core.net.NetSocket;
 import wang.gnim.vertx3.util.PropertiesConfig;
+import wang.gnim.vertx3.util.ServerResource;
 
 import java.util.List;
 
@@ -70,5 +71,13 @@ public class TCPServer extends AbstractVerticle {
                 netSocket.write("revice");
             });
 		}
+
+        /**
+         * 减少GC
+         * 反射性能太差,考虑其他
+         */
+        private void route() {
+
+        }
 	}
 }
