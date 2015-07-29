@@ -67,7 +67,6 @@ public class TCPServer extends AbstractVerticle {
 
 			netSocket.handler(event -> {
                 byte[] bytes = event.getBytes(0, event.length());
-                System.out.println("handler");
                 netSocket.write("revice");
             });
 		}
