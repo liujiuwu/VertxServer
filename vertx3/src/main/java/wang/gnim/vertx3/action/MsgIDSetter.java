@@ -17,5 +17,4 @@ import java.lang.annotation.Target;
 public @interface MsgIDSetter {
 
     Message.MsgID msgID();
-//    Class<GeneratedMessageLite> parser();
 }

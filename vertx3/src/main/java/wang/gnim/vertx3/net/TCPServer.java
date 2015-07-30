@@ -1,6 +1,7 @@
 package wang.gnim.vertx3.net;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import io.netty.buffer.ByteBuf;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.DeploymentOptions;
@@ -10,9 +11,11 @@ import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.net.NetServer;
 import io.vertx.core.net.NetSocket;
 import wang.gnim.protobuf.messages.Message;
+import wang.gnim.vertx3.util.ByteUtil;
 import wang.gnim.vertx3.util.PropertiesConfig;
 import wang.gnim.vertx3.util.ServerResource;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -78,9 +81,8 @@ public class TCPServer extends AbstractVerticle {
          * 反射性能太差,考虑其他
          */
         private void route(NetSocket netSocket, Buffer event) {
-            // XXX  半包问题
-            byte[] bytes = event.getBytes(0, event.length());
 
+            byte[] bytes = readBytesFromBuffer(event);
             try {
                 Message.Request request = Message.Request.parseFrom(bytes);
                 int msgID = request.getMsgId();
@@ -89,6 +91,19 @@ public class TCPServer extends AbstractVerticle {
             } catch (InvalidProtocolBufferException e) {
                 e.printStackTrace();
             }
+        }
+
+        private byte[] readBytesFromBuffer(Buffer event) {
+            ByteBuf byteBuf = event.getByteBuf();
+
+            byte[] length = new byte[2];
+            byteBuf.readBytes(length);
+            short realLength = ByteUtil.bytes2Short(length);
+
+            byte[] protos = new byte[realLength];
+            byteBuf.readBytes(protos);
+
+            return protos;
         }
 	}
 }

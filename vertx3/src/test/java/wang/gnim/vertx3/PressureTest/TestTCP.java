@@ -7,6 +7,7 @@ import io.vertx.core.net.NetClient;
 import io.vertx.core.net.NetSocket;
 import org.junit.Before;
 import org.junit.Test;
+import wang.gnim.protobuf.messages.TestMessage;
 import wang.gnim.vertx3.MockServer;
 import wang.gnim.vertx3.net.Servers;
 import wang.gnim.vertx3.util.PropertiesConfig;
@@ -42,6 +43,9 @@ public class TestTCP {
 
                         long start = System.currentTimeMillis();
 
+                        TestMessage.TestRequest request = TestMessage.TestRequest.newBuilder()
+                                .setData(12)
+                                .build();
                         for (int i = 0; i < 100000; i++) {
                             result.write("123");
                         }

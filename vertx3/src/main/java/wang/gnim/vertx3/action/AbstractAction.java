@@ -1,6 +1,9 @@
 package wang.gnim.vertx3.action;
 
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.MessageLiteOrBuilder;
 import io.vertx.core.AbstractVerticle;
+import wang.gnim.protobuf.messages.TestMessage;
 
 public abstract class AbstractAction extends AbstractVerticle {
 
@@ -9,11 +12,14 @@ public abstract class AbstractAction extends AbstractVerticle {
 		
 		String name = getClass().getCanonicalName();
 		vertx.eventBus().consumer(name, event -> {
-//				execute(event.body());
+            try {
+                execute((byte[]) event.body());
+            } catch (InvalidProtocolBufferException e) {
+                e.printStackTrace();
+            }
         });
-		
 	}
 
-	public abstract void execute(String obj);
+	public abstract void execute(byte[] obj) throws InvalidProtocolBufferException;
 
 }

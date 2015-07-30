@@ -10,17 +10,21 @@ import java.util.concurrent.TimeUnit;
 
 public class MockServer {
 
+    static {
+        ServerResource.INSTANCE.init();
+    }
+
 	public static void startLocalServer() {
         List<Class> actions = ServerResource.INSTANCE.getActions();
         CountDownLatch latch = new CountDownLatch(actions.size());
         for (final Class class1 : actions) {
             Vertxs.TCP_SERVER.deployVerticle(class1.getCanonicalName(), event -> {
                 if (event.succeeded()) {
-                    latch.countDown();
                     System.out.println(class1.getCanonicalName() + "  部署成功");
                 } else {
-
+                    System.out.println(class1.getCanonicalName() + "  部署失败");
                 }
+                latch.countDown();
             });
         }
         try {
@@ -31,7 +35,6 @@ public class MockServer {
     }
 
     public static void startTcpServer() {
-        ServerResource.INSTANCE.getActions();
         Servers.TCP.start();
         try {
             TimeUnit.SECONDS.sleep(2);
