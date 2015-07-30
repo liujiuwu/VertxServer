@@ -1,8 +1,6 @@
 package wang.gnim.vertx3.action;
 
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Handler;
-import io.vertx.core.eventbus.Message;
 
 public abstract class AbstractAction extends AbstractVerticle {
 
@@ -10,13 +8,9 @@ public abstract class AbstractAction extends AbstractVerticle {
 	public void start() throws Exception {
 		
 		String name = getClass().getCanonicalName();
-		vertx.eventBus().consumer(name, new Handler<Message<String>>() {
-
-			@Override
-			public void handle(Message<String> event) {
-				execute(event.body());
-			}
-		});
+		vertx.eventBus().consumer(name, event -> {
+//				execute(event.body());
+        });
 		
 	}
 
