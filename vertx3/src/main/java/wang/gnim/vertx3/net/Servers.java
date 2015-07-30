@@ -1,7 +1,5 @@
 package wang.gnim.vertx3.net;
 
-import io.vertx.core.AsyncResult;
-import io.vertx.core.Handler;
 import wang.gnim.vertx3.vertx.Vertxs;
 
 import java.util.ArrayList;
@@ -9,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ *
  * Created by wanggnim on 2015/7/27.
  */
 public enum Servers {

@@ -3,6 +3,7 @@ package wang.gnim.vertx3.metrics;
 import com.codahale.metrics.health.HealthCheck;
 
 /**
+ *
  * Created by wanggnim on 2015/7/18.
  */
 public class DatabaseHealthCheck extends HealthCheck {

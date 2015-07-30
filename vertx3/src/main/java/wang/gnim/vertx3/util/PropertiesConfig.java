@@ -1,12 +1,10 @@
 package wang.gnim.vertx3.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Properties;
 
 /**
+ *
  * Created by wanggnim on 2015/7/28.
  */
 public enum PropertiesConfig {
@@ -33,7 +31,7 @@ public enum PropertiesConfig {
         return 0;
     }
 
-    private static enum PropertiesLoader {
+    private enum PropertiesLoader {
         INSTANCE;
 
         private Properties properties;

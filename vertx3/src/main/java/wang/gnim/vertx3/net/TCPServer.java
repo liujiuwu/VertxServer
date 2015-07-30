@@ -1,12 +1,15 @@
 package wang.gnim.vertx3.net;
 
+import com.google.protobuf.InvalidProtocolBufferException;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Handler;
+import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.net.NetServer;
 import io.vertx.core.net.NetSocket;
+import wang.gnim.protobuf.messages.Message;
 import wang.gnim.vertx3.util.PropertiesConfig;
 import wang.gnim.vertx3.util.ServerResource;
 
@@ -66,18 +69,26 @@ public class TCPServer extends AbstractVerticle {
 
 			netSocket.exceptionHandler(Throwable::printStackTrace);
 
-			netSocket.handler(event -> {
-                byte[] bytes = event.getBytes(0, event.length());
-                netSocket.write("revice");
-            });
+			netSocket.handler(event ->
+                route(netSocket, event)
+            );
 		}
 
         /**
-         * 减少GC
          * 反射性能太差,考虑其他
          */
-        private void route() {
+        private void route(NetSocket netSocket, Buffer event) {
+            // XXX  半包问题
+            byte[] bytes = event.getBytes(0, event.length());
 
+            try {
+                Message.Request request = Message.Request.parseFrom(bytes);
+                int msgID = request.getMsgId();
+                String address = ServerResource.INSTANCE.getParserAddress(msgID);
+                vertx.eventBus().publish(address, bytes);
+            } catch (InvalidProtocolBufferException e) {
+                e.printStackTrace();
+            }
         }
 	}
 }

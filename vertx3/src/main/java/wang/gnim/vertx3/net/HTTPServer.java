@@ -7,7 +7,6 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Handler;
-import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpServerRequest;
@@ -27,7 +26,7 @@ public class HTTPServer extends AbstractVerticle {
 	public void start() {
 		HttpServerOptions options = new HttpServerOptions().setAcceptBacklog(100);
 
-		HttpServer server = vertx.createHttpServer().requestHandler(new RequestHandler())
+		server = vertx.createHttpServer(options).requestHandler(new RequestHandler())
 				.listen(9001, new ListenHandler());
 	}
 
@@ -51,34 +50,16 @@ public class HTTPServer extends AbstractVerticle {
 			response.write(str);
 			response.end();
 
-			event.bodyHandler(new Handler<Buffer>() {
-				@Override
-				public void handle(Buffer event) {
-					System.out.println("23123");
-					System.out.println(event.getString(0, event.length()));
-				}
-			});
+			event.bodyHandler(event1 -> {
+                System.out.println("23123");
+                System.out.println(event1.getString(0, event1.length()));
+            });
 
-			event.handler(new Handler<Buffer>() {
-				@Override
-				public void handle(Buffer event) {
-					System.out.println("handler");
-				}
-			});
+			event.handler(event1 -> System.out.println("handler"));
 
-			event.endHandler(new Handler<Void>() {
-				@Override
-				public void handle(Void event) {
-					System.out.println("endHandler");
-				}
-			});
+			event.endHandler(event1 -> System.out.println("endHandler"));
 
-			event.exceptionHandler(new Handler<Throwable>() {
-				@Override
-				public void handle(Throwable event) {
-					System.out.println("exceptionHandler");
-				}
-			});
+			event.exceptionHandler(event1 -> System.out.println("exceptionHandler"));
 
 		}
 	}
@@ -88,7 +69,7 @@ public class HTTPServer extends AbstractVerticle {
 		public void handle(AsyncResult<HttpServer> event) {
 			if (event.succeeded()) {
 				System.out.println("HTTP listen successed");
-				deployCommand();
+//				deployCommand();
 			} else {
 				event.cause().printStackTrace();
 			}
@@ -101,16 +82,13 @@ public class HTTPServer extends AbstractVerticle {
 				if (!class1.getSuperclass().getSimpleName().equals("ClientAbstractCommand"))
 					continue;
 
-				vertx.deployVerticle(class1.getCanonicalName(), options, new Handler<AsyncResult<String>>() {
-
-					public void handle(AsyncResult<String> event) {
-						if (event.succeeded()) {
-							System.out.println("deploy:" + class1);
-						} else {
-							System.out.println("faile deploy:" + class1);
-						}
-					}
-				});
+				vertx.deployVerticle(class1.getCanonicalName(), options, event -> {
+                    if (event.succeeded()) {
+                        System.out.println("deploy:" + class1);
+                    } else {
+                        System.out.println("faile deploy:" + class1);
+                    }
+                });
 			}
 		}
 	}

@@ -68,25 +68,10 @@
             <version>3.1.2</version>
         </dependency>
         <dependency>
-            <groupId>wang.gnim</groupId>
-            <artifactId>protobuf</artifactId>
+            <groupId>wang.gnim.protobuf</groupId>
+            <artifactId>protobuf-vertx</artifactId>
+            <version>0.1</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <artifactId>vertx3</artifactId>
-                    <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
-                        <fork>true</fork>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
-
 
 </project>
