@@ -1,5 +1,8 @@
 package wang.gnim.vertx3.action.test;
 
+import com.google.protobuf.AbstractMessageLite;
+import com.google.protobuf.InvalidProtocolBufferException;
+import io.vertx.core.eventbus.Message;
 import org.junit.Test;
 
 import wang.gnim.protobuf.messages.MessageWrapper;
@@ -19,7 +22,17 @@ public class SimpleClientTest {
                 .setData(12)
                 .build();
 
-         Vertxs.TCP_SERVER.eventBusSendReply(MessageWrapper.MsgID.Test, request.toByteArray());
+         Vertxs.TCP_SERVER.eventBusSend(MessageWrapper.MsgID.Test, request.toByteArray(), event -> {
+             if (event.succeeded()) {
+                 try {
+                    TestMessage.TestResponse response = TestMessage.TestResponse.parseFrom(event.result().body());
+                    System.out.println(response.getData());
+                 } catch (InvalidProtocolBufferException e) {
+                     e.printStackTrace();
+                 }
+
+             }
+         });
 
         try {
             TimeUnit.SECONDS.sleep(1);

@@ -1,5 +1,6 @@
 package wang.gnim.vertx3.core.vertx;
 
+import com.google.protobuf.AbstractMessageLite;
 import io.vertx.core.*;
 import io.vertx.core.eventbus.Message;
 import io.vertx.core.net.NetClient;
@@ -62,14 +63,10 @@ public enum Vertxs {
     /**
      * 发送消息,接受返回值
      */
-    public void eventBusSendReply(MessageWrapper.MsgID address, Object message) {
+    public void eventBusSend(MessageWrapper.MsgID address, Object message,
+                             Handler<AsyncResult<Message<byte[]>>> replyHandler) {
         String sendAddress = ServerResource.INSTANCE.getParserAddress(address);
-        vertx.eventBus().send(sendAddress, message, event -> {
-            if (event.succeeded()) {
-                Message<Object> result = event.result();
-                System.out.println(result.body());
-            }
-        });
+        vertx.eventBus().send(sendAddress, message, replyHandler);
     }
 
     public void undeploy(String deploymentID, Handler<AsyncResult<Void>> handler) {
