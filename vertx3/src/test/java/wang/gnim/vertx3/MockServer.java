@@ -1,8 +1,8 @@
 package wang.gnim.vertx3;
 
 import wang.gnim.vertx3.util.ServerResource;
-import wang.gnim.vertx3.net.Servers;
-import wang.gnim.vertx3.vertx.Vertxs;
+import wang.gnim.vertx3.core.net.Servers;
+import wang.gnim.vertx3.core.vertx.Vertxs;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;

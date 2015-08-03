@@ -4,9 +4,7 @@ import org.junit.Test;
 
 import wang.gnim.protobuf.messages.TestMessage;
 import wang.gnim.vertx3.MockServer;
-import wang.gnim.vertx3.vertx.Vertxs;
-
-import java.util.concurrent.TimeUnit;
+import wang.gnim.vertx3.core.vertx.Vertxs;
 
 public class SimpleClientTest {
 
