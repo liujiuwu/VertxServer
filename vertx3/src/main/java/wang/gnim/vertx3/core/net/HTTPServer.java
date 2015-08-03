@@ -11,6 +11,7 @@ import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
+import wang.gnim.vertx3.log.GameLogger;
 import wang.gnim.vertx3.util.ClassFinder;
 
 import java.util.List;
@@ -68,7 +69,7 @@ public class HTTPServer extends AbstractVerticle {
 
 		public void handle(AsyncResult<HttpServer> event) {
 			if (event.succeeded()) {
-				System.out.println("HTTP listen successed");
+                GameLogger.log("HTTP listen successed");
 //				deployCommand();
 			} else {
 				event.cause().printStackTrace();
@@ -84,9 +85,9 @@ public class HTTPServer extends AbstractVerticle {
 
 				vertx.deployVerticle(class1.getCanonicalName(), options, event -> {
                     if (event.succeeded()) {
-                        System.out.println("deploy:" + class1);
+                        GameLogger.log("deploy:" + class1);
                     } else {
-                        System.out.println("faile deploy:" + class1);
+                        GameLogger.log("faile deploy:" + class1);
                     }
                 });
 			}

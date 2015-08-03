@@ -11,6 +11,7 @@ import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.net.NetServer;
 import io.vertx.core.net.NetSocket;
 import wang.gnim.protobuf.messages.MessageWrapper;
+import wang.gnim.vertx3.log.GameLogger;
 import wang.gnim.vertx3.util.ByteUtil;
 import wang.gnim.vertx3.util.PropertiesConfig;
 import wang.gnim.vertx3.util.ServerResource;
@@ -50,9 +51,9 @@ public class TCPServer extends AbstractVerticle {
 
 				vertx.deployVerticle(class1.getCanonicalName(), options, event -> {
                     if (event.succeeded()) {
-                        System.out.println("deploy:" + class1.getCanonicalName());
+                        GameLogger.log("deploy:" + class1.getCanonicalName());
                     } else {
-                        System.out.println("faile deploy:" + class1.getCanonicalName());
+                        GameLogger.log("faile deploy:" + class1.getCanonicalName());
                     }
                 });
 			}

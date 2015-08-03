@@ -7,6 +7,7 @@ import io.vertx.core.net.NetClient;
 import io.vertx.ext.dropwizard.DropwizardMetricsOptions;
 import io.vertx.ext.dropwizard.MetricsService;
 import wang.gnim.protobuf.messages.MessageWrapper;
+import wang.gnim.vertx3.log.GameLogger;
 import wang.gnim.vertx3.util.ServerResource;
 
 /**
@@ -36,9 +37,9 @@ public enum Vertxs {
     public void deployVerticle(String name) {
         vertx.deployVerticle(name, event -> {
             if (event.succeeded()) {
-                System.out.println("Verticle部署成功：" + name);
+                GameLogger.log("Verticle部署成功：" + name);
             } else {
-                System.out.println("Verticle部署失败：" + name);
+                GameLogger.log("Verticle部署失败：" + name);
             }
         });
     }

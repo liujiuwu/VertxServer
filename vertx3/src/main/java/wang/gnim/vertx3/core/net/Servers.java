@@ -1,6 +1,7 @@
 package wang.gnim.vertx3.core.net;
 
 import wang.gnim.vertx3.core.vertx.Vertxs;
+import wang.gnim.vertx3.log.GameLogger;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +39,7 @@ public enum Servers {
 
     private void undeploy(String deploymentID) {
         vertxs.undeploy(deploymentID, event -> {
-            System.out.println(deploymentID + " 解除部署成功");
+            GameLogger.log(deploymentID + " 解除部署成功");
             undeploy(serverIds);
         });
     }

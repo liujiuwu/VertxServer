@@ -1,5 +1,6 @@
 package wang.gnim.vertx3;
 
+import wang.gnim.vertx3.log.GameLogger;
 import wang.gnim.vertx3.util.ServerResource;
 import wang.gnim.vertx3.core.net.Servers;
 import wang.gnim.vertx3.core.vertx.Vertxs;
@@ -20,9 +21,9 @@ public class MockServer {
         for (final Class class1 : actions) {
             Vertxs.TCP_SERVER.deployVerticle(class1.getCanonicalName(), event -> {
                 if (event.succeeded()) {
-                    System.out.println(class1.getCanonicalName() + "  部署成功");
+                    GameLogger.log(class1.getCanonicalName() + "  部署成功");
                 } else {
-                    System.out.println(class1.getCanonicalName() + "  部署失败");
+                    GameLogger.log(class1.getCanonicalName() + "  部署失败");
                 }
                 latch.countDown();
             });
