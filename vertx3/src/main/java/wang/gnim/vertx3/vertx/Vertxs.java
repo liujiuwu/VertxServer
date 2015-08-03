@@ -25,15 +25,9 @@ public enum Vertxs {
 
         vertx = Vertx.factory.vertx(vertxOptions);
 
-        metricsService = MetricsService.create(vertx);
     }
 
     private final Vertx vertx;
-    private MetricsService metricsService;
-
-    public MetricsService getMetricsService() {
-        return metricsService;
-    }
 
     public void deployVerticle(String name) {
         vertx.deployVerticle(name, event -> {
@@ -67,5 +61,9 @@ public enum Vertxs {
 
     public NetClient createTCPClient() {
         return vertx.createNetClient();
+    }
+
+    public MetricsService createMetricsService() {
+        return MetricsService.create(vertx);
     }
 }

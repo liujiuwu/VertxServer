@@ -5,6 +5,7 @@ import com.codahale.metrics.Histogram;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.Snapshot;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import wang.gnim.vertx3.util.JsonOutput;
 
@@ -17,13 +18,15 @@ import java.util.concurrent.TimeUnit;
 public class MetricManagerTest {
 
     @Before
+    @Ignore
     public void testStartConsoleReporter_ok() throws InterruptedException {
-        MetricManager.INSTANCE.startConsoleReporter();
+        Metrics.TCP.startConsoleReporter();
     }
 
     @Test
+    @Ignore
     public void testMeter() {
-        Meter meter = MetricManager.INSTANCE.meter("meter");
+        Meter meter = Metrics.TCP.meter("meter");
 
         JsonOutput.builder()
                 .append("Meter Count", meter.getCount())
@@ -35,8 +38,9 @@ public class MetricManagerTest {
     }
 
     @Test
+    @Ignore
     public void testCounter() {
-        Counter counter = MetricManager.INSTANCE.counter(BeTested.class, "counter");
+        Counter counter = Metrics.TCP.counter(BeTested.class, "counter");
 
         counter.inc();
         JsonOutput.builder()
@@ -50,8 +54,9 @@ public class MetricManagerTest {
     }
 
     @Test
+    @Ignore
     public void testHistogram() throws InterruptedException {
-        Histogram histogram = MetricManager.INSTANCE.histogram(BeTested.class, "histogram");
+        Histogram histogram = Metrics.TCP.histogram(BeTested.class, "histogram");
 
         Random random = new Random();
         for (int i = 1; i < 10; i++) {

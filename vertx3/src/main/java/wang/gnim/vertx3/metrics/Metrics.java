@@ -3,6 +3,8 @@ package wang.gnim.vertx3.metrics;
 import com.codahale.metrics.*;
 import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
+import io.vertx.ext.dropwizard.MetricsService;
+import wang.gnim.vertx3.vertx.Vertxs;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -12,12 +14,23 @@ import java.util.concurrent.TimeUnit;
  *
  * Created by wanggnim on 2015/7/18.
  */
-public enum MetricManager {
+public enum Metrics {
 
-    INSTANCE;
+    TCP(Vertxs.TCP_SERVER),
+    HTTP(Vertxs.HTTP_SERVER);
 
     private final MetricRegistry metrics = new MetricRegistry();
     private final HealthCheckRegistry healthChecks = new HealthCheckRegistry();
+
+    private MetricsService metricsService;
+
+    public MetricsService getMetricsService() {
+        return metricsService;
+    }
+
+    Metrics(Vertxs vertxs) {
+        metricsService = vertxs.TCP_SERVER.createMetricsService();
+    }
 
     public Meter meter(String name) {
         Meter requests = metrics.meter(name);
