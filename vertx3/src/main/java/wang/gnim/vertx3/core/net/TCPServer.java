@@ -10,7 +10,7 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.net.NetServer;
 import io.vertx.core.net.NetSocket;
-import wang.gnim.protobuf.messages.Message;
+import wang.gnim.protobuf.messages.MessageWrapper;
 import wang.gnim.vertx3.util.ByteUtil;
 import wang.gnim.vertx3.util.PropertiesConfig;
 import wang.gnim.vertx3.util.ServerResource;
@@ -76,16 +76,12 @@ public class TCPServer extends AbstractVerticle {
             );
 		}
 
-        /**
-         * 反射性能太差,考虑其他
-         */
         private void route(NetSocket netSocket, Buffer event) {
 
             byte[] bytes = readBytesFromBuffer(event);
             try {
-                Message.Request request = Message.Request.parseFrom(bytes);
-                int msgID = request.getMsgId();
-                String address = ServerResource.INSTANCE.getParserAddress(msgID);
+                MessageWrapper.Request request = MessageWrapper.Request.parseFrom(bytes);
+                String address = ServerResource.INSTANCE.getParserAddress(request.getMsgId());
                 vertx.eventBus().publish(address, bytes);
             } catch (InvalidProtocolBufferException e) {
                 e.printStackTrace();

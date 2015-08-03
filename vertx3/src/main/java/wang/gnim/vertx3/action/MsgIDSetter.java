@@ -1,7 +1,7 @@
 package wang.gnim.vertx3.action;
 
 import com.google.protobuf.GeneratedMessageLite;
-import wang.gnim.protobuf.messages.Message;
+import wang.gnim.protobuf.messages.MessageWrapper;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -16,5 +16,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MsgIDSetter {
 
-    Message.MsgID msgID();
+    MessageWrapper.MsgID msgID();
 }

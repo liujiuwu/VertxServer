@@ -1,6 +1,6 @@
 package wang.gnim.vertx3.util;
 
-import wang.gnim.protobuf.messages.Message;
+import wang.gnim.protobuf.messages.MessageWrapper;
 import wang.gnim.vertx3.action.AbstractAction;
 import wang.gnim.vertx3.action.MsgIDSetter;
 
@@ -18,7 +18,7 @@ public enum ServerResource {
     INSTANCE;
 
     private List<Class> actions;
-    private Map<Integer, String> parserAddresses = new HashMap<>();
+    private Map<MessageWrapper.MsgID, String> parserAddresses = new HashMap<>();
 
     ServerResource() {
         actions = new ArrayList<>();
@@ -39,8 +39,8 @@ public enum ServerResource {
             for (Annotation anno : annotations) {
                 if(anno.annotationType() == MsgIDSetter.class) {
                     MsgIDSetter msgIDSetter = (MsgIDSetter)anno;
-                    Message.MsgID msgID = msgIDSetter.msgID();
-                    parserAddresses.put(msgID.getNumber(), class1.getCanonicalName());
+                    MessageWrapper.MsgID msgID = msgIDSetter.msgID();
+                    parserAddresses.put(msgID, class1.getCanonicalName());
                 }
             }
         }
@@ -50,7 +50,7 @@ public enum ServerResource {
         return actions;
     }
 
-    public String getParserAddress(Integer id) {
+    public String getParserAddress(MessageWrapper.MsgID id) {
         return parserAddresses.get(id);
     }
 }

@@ -7,6 +7,7 @@ import com.codahale.metrics.Snapshot;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import wang.gnim.vertx3.core.metrics.Metrics;
 import wang.gnim.vertx3.util.JsonOutput;
 
 import java.util.Random;
