@@ -18,7 +18,8 @@ public enum Vertxs {
 
     TCP_SERVER,
     HTTP_SERVER,
-    TCP_CLIENT
+    TCP_CLIENT,
+    LOGIC
     ;
 
     Vertxs() {
@@ -43,6 +44,10 @@ public enum Vertxs {
             }
         });
     }
+
+    public void deployVerticle(String name, DeploymentOptions options, Handler<AsyncResult<String>> completionHandler) {
+        vertx.deployVerticle(name, options, completionHandler);
+    };
 
     public void deployVerticle(String name, Handler<AsyncResult<String>> completionHandler) {
         vertx.deployVerticle(name, completionHandler);

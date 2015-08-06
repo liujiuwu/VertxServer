@@ -11,6 +11,7 @@ import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.net.NetServer;
 import io.vertx.core.net.NetSocket;
 import wang.gnim.protobuf.messages.MessageWrapper;
+import wang.gnim.vertx3.core.vertx.Vertxs;
 import wang.gnim.vertx3.log.GameLogger;
 import wang.gnim.vertx3.util.ByteUtil;
 import wang.gnim.vertx3.util.PropertiesConfig;
@@ -49,7 +50,7 @@ public class TCPServer extends AbstractVerticle {
             List<Class> actions = ServerResource.INSTANCE.getActions();
             for (final Class class1 : actions) {
 
-				vertx.deployVerticle(class1.getCanonicalName(), options, event -> {
+                Vertxs.LOGIC.deployVerticle(class1.getCanonicalName(), options, event -> {
                     if (event.succeeded()) {
                         GameLogger.log("deploy:" + class1.getCanonicalName());
                     } else {
@@ -82,8 +83,7 @@ public class TCPServer extends AbstractVerticle {
             byte[] bytes = readBytesFromBuffer(event);
             try {
                 MessageWrapper.Request request = MessageWrapper.Request.parseFrom(bytes);
-                String address = ServerResource.INSTANCE.getParserAddress(request.getMsgId());
-                vertx.eventBus().publish(address, bytes);
+                Vertxs.LOGIC.eventBusPublish(request.getMsgId(), bytes);
             } catch (InvalidProtocolBufferException e) {
                 e.printStackTrace();
             }
