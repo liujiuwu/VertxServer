@@ -54,16 +54,14 @@ public enum Vertxs {
     }
 
     public void eventBusPublish(MessageWrapper.MsgID address, Object message) {
-        String sendAddress = ServerResource.INSTANCE.getParserAddress(address);
-        vertx.eventBus().publish(sendAddress, message);
+        vertx.eventBus().publish(address.name(), message);
     }
 
     /**
      * 发送消息,不接受返回值
      */
     public void eventBusSend(MessageWrapper.MsgID address, Object message) {
-        String sendAddress = ServerResource.INSTANCE.getParserAddress(address);
-        vertx.eventBus().send(sendAddress, message);
+        vertx.eventBus().send(address.name(), message);
     }
 
     /**
@@ -71,8 +69,7 @@ public enum Vertxs {
      */
     public void eventBusSend(MessageWrapper.MsgID address, Object message,
                              Handler<AsyncResult<Message<byte[]>>> replyHandler) {
-        String sendAddress = ServerResource.INSTANCE.getParserAddress(address);
-        vertx.eventBus().send(sendAddress, message, replyHandler);
+        vertx.eventBus().send(address.name(), message, replyHandler);
     }
 
     public void undeploy(String deploymentID, Handler<AsyncResult<Void>> handler) {

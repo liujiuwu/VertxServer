@@ -17,6 +17,7 @@ import wang.gnim.vertx3.util.ByteUtil;
 import wang.gnim.vertx3.util.PropertiesConfig;
 import wang.gnim.vertx3.util.ServerResource;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -47,14 +48,14 @@ public class TCPServer extends AbstractVerticle {
 		public void deployAction() {
 
 			DeploymentOptions options = new DeploymentOptions();
-            List<Class> actions = ServerResource.INSTANCE.getActions();
-            for (final Class class1 : actions) {
+            Collection<String> actionNames = ServerResource.INSTANCE.getActionNames();
+            for (final String actionName : actionNames) {
 
-                Vertxs.LOGIC.deployVerticle(class1.getCanonicalName(), options, event -> {
+                Vertxs.LOGIC.deployVerticle(actionName, options, event -> {
                     if (event.succeeded()) {
-                        GameLogger.log("deploy:" + class1.getCanonicalName());
+                        GameLogger.log("deploy:" + actionName);
                     } else {
-                        GameLogger.log("faile deploy:" + class1.getCanonicalName());
+                        GameLogger.log("faile deploy:" + actionName);
                     }
                 });
 			}

@@ -5,6 +5,7 @@ import wang.gnim.vertx3.util.ServerResource;
 import wang.gnim.vertx3.core.net.Servers;
 import wang.gnim.vertx3.core.vertx.Vertxs;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -16,14 +17,14 @@ public class MockServer {
     }
 
 	public static void startLocalServer() {
-        List<Class> actions = ServerResource.INSTANCE.getActions();
+        Collection<String> actions = ServerResource.INSTANCE.getActionNames();
         CountDownLatch latch = new CountDownLatch(actions.size());
-        for (final Class class1 : actions) {
-            Vertxs.TCP_SERVER.deployVerticle(class1.getCanonicalName(), event -> {
+        for (final String class1 : actions) {
+            Vertxs.TCP_SERVER.deployVerticle(class1, event -> {
                 if (event.succeeded()) {
-                    GameLogger.log(class1.getCanonicalName() + "  部署成功");
+                    GameLogger.log(class1 + "  部署成功");
                 } else {
-                    GameLogger.log(class1.getCanonicalName() + "  部署失败");
+                    GameLogger.log(class1 + "  部署失败");
                 }
                 latch.countDown();
             });
