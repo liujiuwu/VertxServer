@@ -11,12 +11,12 @@ import java.util.List;
  *
  * Created by wanggnim on 2015/7/27.
  */
-public enum Servers {
+public enum ServerStarter {
 
-    TCP(Vertxs.TCP_SERVER, TCPServer.class),
-    HTTP(Vertxs.HTTP_SERVER, HTTPServer.class);
+    TCP(Vertxs.TCP_SERVER, TCPServerStarter.class),
+    HTTP(Vertxs.HTTP_SERVER, HTTPServerStarter.class);
 
-    Servers(Vertxs vertxs, Class clazz) {
+    ServerStarter(Vertxs vertxs, Class clazz) {
         this.vertxs = vertxs;
         this.clazz = clazz;
     }

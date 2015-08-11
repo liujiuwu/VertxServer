@@ -24,7 +24,7 @@ import java.util.List;
  *
  * Created by wanggnim on 2015/7/17.
  */
-public class TCPServer extends AbstractVerticle {
+public class TCPServerStarter extends AbstractVerticle {
 	@Override
 	public void start() {
 		HttpServerOptions options = new HttpServerOptions().setAcceptBacklog(100);

@@ -20,7 +20,7 @@ import java.util.List;
  *
  * Created by wanggnim on 2015/7/17.
  */
-public class HTTPServer extends AbstractVerticle {
+public class HTTPServerStarter extends AbstractVerticle {
 	private HttpServer server;
 
 	@Override

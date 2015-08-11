@@ -80,10 +80,6 @@ public enum Vertxs {
         return vertx.createNetClient();
     }
 
-    public MetricsService createMetricsService() {
-        return MetricsService.create(vertx);
-    }
-
     public Vertx vertx() {
         return vertx;
     }
