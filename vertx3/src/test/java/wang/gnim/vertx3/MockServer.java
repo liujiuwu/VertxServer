@@ -36,7 +36,7 @@ public class MockServer {
     }
 
     public static void startTcpServer() {
-        ServerStarter.TCP.start();
+        ServerStarter.INSTANCE.startTCPServer();
         try {
             TimeUnit.SECONDS.sleep(2);
         } catch (InterruptedException e) {

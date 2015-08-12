@@ -1,14 +1,14 @@
 package wang.gnim.vertx3.core.metrics;
 
-import com.codahale.metrics.*;
-import com.codahale.metrics.health.HealthCheck;
-import com.codahale.metrics.health.HealthCheckRegistry;
+import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.net.NetServer;
 import io.vertx.ext.dropwizard.MetricsService;
+import wang.gnim.vertx3.core.metrics.impl.NetServerMetric;
+import wang.gnim.vertx3.core.metrics.impl.VertxMetric;
+import wang.gnim.vertx3.core.net.ServerCache;
 import wang.gnim.vertx3.core.vertx.Vertxs;
 
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 服务器监控
@@ -20,8 +20,6 @@ public enum Metrics {
     TCP(Vertxs.TCP_SERVER),
     HTTP(Vertxs.HTTP_SERVER);
 
-    private final HealthCheckRegistry healthChecks = new HealthCheckRegistry();
-
     private MetricsService metricsService;
     private Vertxs vertxs;
 
@@ -30,38 +28,21 @@ public enum Metrics {
         this.vertxs = vertxs;
     }
 
-    public JsonObject getVertxMetricsSnapshot() {
-        // TODO 等待后期vertx版本更新
-        return metricsService.getMetricsSnapshot(vertxs.vertx());
+    public VertxMetric getVertxMetrics() {
+        JsonObject metric = metricsService.getMetricsSnapshot(vertxs.vertx());
+        return new VertxMetric(metric);
     }
 
-    public JsonObject getTCPMetricsSnapshot() {
-        return metricsService.getMetricsSnapshot(vertxs.vertx());
+    public NetServerMetric getTCPMetric() {
+        NetServer tcpServer = ServerCache.INSTANCE.getTcpServer();
+        JsonObject metric = metricsService.getMetricsSnapshot(tcpServer);
+        return new NetServerMetric(metric);
     }
 
-    public JsonObject getHTTPMetricsSnapshot() {
-        return metricsService.getMetricsSnapshot(vertxs.vertx());
+    public JsonObject getHTTPMetrics() {
+        HttpServer tcpServer = ServerCache.INSTANCE.getHTTPServer();
+        JsonObject metric = metricsService.getMetricsSnapshot(tcpServer);
+        return null;
     }
-
-    public void addMysqlHealthCheck() {
-        healthChecks.register("mysql", new DatabaseHealthCheck());
-    }
-
-    public void runHealthChecks() {
-        final Map<String, HealthCheck.Result> results = healthChecks.runHealthChecks();
-        for (Map.Entry<String, HealthCheck.Result> entry : results.entrySet()) {
-            if (entry.getValue().isHealthy()) {
-                System.out.println(entry.getKey() + " is healthy");
-            } else {
-                System.err.println(entry.getKey() + " is UNHEALTHY: " + entry.getValue().getMessage());
-                final Throwable e = entry.getValue().getError();
-                if (e != null) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-
 
 }

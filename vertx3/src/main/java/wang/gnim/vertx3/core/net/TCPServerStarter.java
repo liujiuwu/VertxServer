@@ -29,9 +29,11 @@ public class TCPServerStarter extends AbstractVerticle {
 	public void start() {
 		HttpServerOptions options = new HttpServerOptions().setAcceptBacklog(100);
 
-		vertx.createNetServer(options)
+        NetServer server = vertx.createNetServer(options)
                 .connectHandler(new ConnectHandler())
                 .listen(PropertiesConfig.TCP_PORT.intValue(), new ListenHandler());
+
+        ServerCache.INSTANCE.addTCPServer(server);
 	}
 
 	private class ListenHandler implements Handler<AsyncResult<NetServer>> {

@@ -8,7 +8,7 @@ import io.vertx.core.AbstractVerticle;
  * 利用泛型,可以在实现类中直接设置可解析类型
  *
  */
-public abstract class AbstractAction extends AbstractVerticle {
+public abstract class AbstractAction extends AbstractVerticle  {
 
 	@Override
 	public void start() throws Exception {

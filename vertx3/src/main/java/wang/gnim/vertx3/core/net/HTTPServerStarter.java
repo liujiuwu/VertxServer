@@ -13,6 +13,7 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import wang.gnim.vertx3.log.GameLogger;
 import wang.gnim.vertx3.util.ClassFinder;
+import wang.gnim.vertx3.util.ServerResource;
 
 import java.util.List;
 
@@ -21,14 +22,15 @@ import java.util.List;
  * Created by wanggnim on 2015/7/17.
  */
 public class HTTPServerStarter extends AbstractVerticle {
-	private HttpServer server;
 
 	@Override
 	public void start() {
 		HttpServerOptions options = new HttpServerOptions().setAcceptBacklog(100);
 
-		server = vertx.createHttpServer(options).requestHandler(new RequestHandler())
-				.listen(9001, new ListenHandler());
+        HttpServer server = vertx.createHttpServer(options).requestHandler(new RequestHandler())
+                .listen(9001, new ListenHandler());
+
+        ServerCache.INSTANCE.addHTTPServer(server);
 	}
 
 	private class RequestHandler implements Handler<HttpServerRequest> {

@@ -13,41 +13,21 @@ import java.util.List;
  */
 public enum ServerStarter {
 
-    TCP(Vertxs.TCP_SERVER, TCPServerStarter.class),
-    HTTP(Vertxs.HTTP_SERVER, HTTPServerStarter.class);
+    INSTANCE;
 
-    ServerStarter(Vertxs vertxs, Class clazz) {
-        this.vertxs = vertxs;
-        this.clazz = clazz;
+    public void startHTTPServer() {
+        Vertxs.HTTP_SERVER.deployVerticle(HTTPServerStarter.class.getCanonicalName());
     }
 
-    private Vertxs vertxs;
-    private Class clazz;
-    private List<String> serverIds = new ArrayList<>();
-
-    public void start() {
-        vertxs.deployVerticle(clazz.getCanonicalName());
+    public void startTCPServer() {
+        Vertxs.TCP_SERVER.deployVerticle(TCPServerStarter.class.getCanonicalName());
     }
 
-    public void restart() {
-        List<String> copyServerIds = new ArrayList<>();
-        Collections.copy(serverIds, copyServerIds);
-        serverIds.clear();
-
-        undeploy(serverIds);
+    public void restartHTTPServer() {
+//        Vertxs.HTTP_SERVER.undeploy();
     }
 
-    private void undeploy(String deploymentID) {
-        vertxs.undeploy(deploymentID, event -> {
-            GameLogger.log(deploymentID + " 解除部署成功");
-            undeploy(serverIds);
-        });
-    }
-
-    private void undeploy(List<String> copyServerIds) {
-        if (copyServerIds.size() > 0) {
-            String deploymentID = copyServerIds.remove(0);
-            undeploy(deploymentID);
-        }
+    public void restartTCPServer() {
+//        Vertxs.TCP_SERVER.undeploy();
     }
 }

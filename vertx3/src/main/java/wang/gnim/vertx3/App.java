@@ -9,8 +9,8 @@ public class App {
 	public static void main(String[] args) {
         ServerResource.INSTANCE.init();
 
-        ServerStarter.HTTP.start();
-        ServerStarter.TCP.start();
+        ServerStarter.INSTANCE.startTCPServer();
+        ServerStarter.INSTANCE.startHTTPServer();
 
 	}
 }
