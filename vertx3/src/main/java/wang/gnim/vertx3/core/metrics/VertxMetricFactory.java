@@ -15,7 +15,7 @@ import wang.gnim.vertx3.core.vertx.Vertxs;
  *
  * Created by wanggnim on 2015/7/18.
  */
-public enum Metrics {
+public enum VertxMetricFactory {
 
     TCP(Vertxs.TCP_SERVER),
     HTTP(Vertxs.HTTP_SERVER);
@@ -23,7 +23,7 @@ public enum Metrics {
     private MetricsService metricsService;
     private Vertxs vertxs;
 
-    Metrics(Vertxs vertxs) {
+    VertxMetricFactory(Vertxs vertxs) {
         metricsService = MetricsService.create(vertxs.vertx());
         this.vertxs = vertxs;
     }

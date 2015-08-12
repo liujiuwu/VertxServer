@@ -1,23 +1,10 @@
 package wang.gnim.vertx3.core.metrics;
 
-import com.alibaba.fastjson.JSON;
-import com.codahale.metrics.Counter;
-import com.codahale.metrics.Histogram;
-import com.codahale.metrics.Meter;
-import com.codahale.metrics.Snapshot;
-import io.vertx.core.json.JsonObject;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import wang.gnim.vertx3.core.metrics.Metrics;
 import wang.gnim.vertx3.core.metrics.impl.NetServerMetric;
 import wang.gnim.vertx3.core.metrics.impl.VertxMetric;
 import wang.gnim.vertx3.core.net.ServerStarter;
-import wang.gnim.vertx3.util.JsonOutput;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -28,7 +15,7 @@ public class MetricsTest {
 
     @Test
     public void testVertxMetricsSnapshot() {
-        VertxMetric vertxMetricsSnapshot = Metrics.TCP.getVertxMetrics();
+        VertxMetric vertxMetricsSnapshot = VertxMetricFactory.TCP.getVertxMetrics();
 
         System.out.println(vertxMetricsSnapshot.toPrettyString());
         System.out.println(vertxMetricsSnapshot.getVerticles());
@@ -43,7 +30,7 @@ public class MetricsTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        NetServerMetric metric = Metrics.TCP.getTCPMetric();
+        NetServerMetric metric = VertxMetricFactory.TCP.getTCPMetric();
         System.out.println(metric.getBytesWritten());
     }
 }
