@@ -16,83 +16,83 @@ public class EventBusMetric {
     }
 
     public JsonObject getHandlers() {
-        return obj.getJsonObject(preName + "handlers");
+        return obj.getJsonObject("handlers");
     }
 
     public JsonObject getAddress() {
-        return obj.getJsonObject(preName + "handlers.myaddress");
+        return obj.getJsonObject("handlers.myaddress");
     }
 
     public JsonObject getBytesRead() {
-        return obj.getJsonObject(preName + "messages.bytes-read");
+        return obj.getJsonObject("messages.bytes-read");
     }
 
     public JsonObject getBytesWritten() {
-        return obj.getJsonObject(preName + "messages.bytes-written");
+        return obj.getJsonObject("messages.bytes-written");
     }
 
     public JsonObject getPending() {
-        return obj.getJsonObject(preName + "messages.pending");
+        return obj.getJsonObject("messages.pending");
     }
 
     public JsonObject getPendingLocal() {
-        return obj.getJsonObject(preName + "messages.pending-local");
+        return obj.getJsonObject("messages.pending-local");
     }
 
     public JsonObject getPendingRemote() {
-        return obj.getJsonObject(preName + "messages.pending-remote");
+        return obj.getJsonObject("messages.pending-remote");
     }
 
     public JsonObject getReceived() {
-        return obj.getJsonObject(preName + "messages.received");
+        return obj.getJsonObject("messages.received");
     }
 
     public JsonObject getReceivedLocal() {
-        return obj.getJsonObject(preName + "messages.received-local");
+        return obj.getJsonObject("messages.received-local");
     }
 
     public JsonObject getReceivedRemote() {
-        return obj.getJsonObject(preName + "messages.received-remote");
+        return obj.getJsonObject("messages.received-remote");
     }
 
     public JsonObject getDelivered() {
-        return obj.getJsonObject(preName + "messages.delivered");
+        return obj.getJsonObject("messages.delivered");
     }
 
     public JsonObject getDeliveredLocal() {
-        return obj.getJsonObject(preName + "messages.delivered-local");
+        return obj.getJsonObject("messages.delivered-local");
     }
 
     public JsonObject getDeliveredRemote() {
-        return obj.getJsonObject(preName + "messages.delivered-remote");
+        return obj.getJsonObject("messages.delivered-remote");
     }
 
     public JsonObject getSent() {
-        return obj.getJsonObject(preName + "messages.sent");
+        return obj.getJsonObject("messages.sent");
     }
 
     public JsonObject getSentLocal() {
-        return obj.getJsonObject(preName + "messages.sent-local");
+        return obj.getJsonObject("messages.sent-local");
     }
 
     public JsonObject getSentRemote() {
-        return obj.getJsonObject(preName + "messages.sent-remote");
+        return obj.getJsonObject("messages.sent-remote");
     }
 
     public JsonObject getPublished() {
-        return obj.getJsonObject(preName + "messages.published");
+        return obj.getJsonObject("messages.published");
     }
 
     public JsonObject getPublishedLocal() {
-        return obj.getJsonObject(preName + "messages.published-local");
+        return obj.getJsonObject("messages.published-local");
     }
 
     public JsonObject getPublishedRemote() {
-        return obj.getJsonObject(preName + "messages.published-remote");
+        return obj.getJsonObject("messages.published-remote");
     }
 
     public JsonObject getReplyFailures() {
-        return obj.getJsonObject(preName + "messages.reply-failures");
+        return obj.getJsonObject("messages.reply-failures");
     }
 
     public String toString() {

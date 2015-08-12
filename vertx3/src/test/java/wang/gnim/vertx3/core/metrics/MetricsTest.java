@@ -10,7 +10,9 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import wang.gnim.vertx3.core.metrics.Metrics;
+import wang.gnim.vertx3.core.metrics.impl.NetServerMetric;
 import wang.gnim.vertx3.core.metrics.impl.VertxMetric;
+import wang.gnim.vertx3.core.net.ServerStarter;
 import wang.gnim.vertx3.util.JsonOutput;
 
 import java.util.Iterator;
@@ -32,5 +34,16 @@ public class MetricsTest {
         System.out.println(vertxMetricsSnapshot.getVerticles());
     }
 
+    @Test
+    public void testTCPMetric() {
+        ServerStarter.INSTANCE.startTCPServer();
 
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        NetServerMetric metric = Metrics.TCP.getTCPMetric();
+        System.out.println(metric.getBytesWritten());
+    }
 }

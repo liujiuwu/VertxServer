@@ -9,34 +9,34 @@ import io.vertx.core.json.JsonObject;
 public class NetServerMetric {
 
     private final JsonObject obj;
-    private static final String preName = "vertx.net.servers.<host>:<port>.";
+    private static final String preName = "vertx.net.servers.<127.0.0.1>:<9000>.";
 
     public NetServerMetric(JsonObject obj) {
         this.obj = obj;
     }
 
     public JsonObject getOpenNetsockets() {
-        return obj.getJsonObject(preName + "open-netsockets");
+        return obj.getJsonObject("open-netsockets");
     }
 
     public JsonObject getOpenNetsockets(String host) {
-        return obj.getJsonObject(preName + "open-netsockets.<remote-host>");
+        return obj.getJsonObject("open-netsockets.<remote-host>");
     }
 
     public JsonObject getConnections() {
-        return obj.getJsonObject(preName + "connections");
+        return obj.getJsonObject("connections");
     }
 
     public JsonObject getExceptions() {
-        return obj.getJsonObject(preName + "exceptions");
+        return obj.getJsonObject("exceptions");
     }
 
     public JsonObject getBytesRead() {
-        return obj.getJsonObject(preName + "bytes-read");
+        return obj.getJsonObject("bytes-read");
     }
 
     public JsonObject getBytesWritten() {
-        return obj.getJsonObject(preName + "bytes-written");
+        return obj.getJsonObject("bytes-written");
     }
 
     public String toString() {
